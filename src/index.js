@@ -1,17 +1,8 @@
-//для локальной проверки
-// const fs = require('fs');
-// const path = require('path');
-// const pathdataJson = path.join(__dirname, '../examples/input-vloj.json');
-// const outputdataJson = path.join(__dirname, '../examples/example-output.json');
-// const dataJson = fs.readFileSync(pathdataJson);
-// const dataInput = JSON.parse(dataJson);
-
-
 function prepareData(data, sprint) {
   let  userList = {}, sprintsList = {};
   const resultArray = [], summaryList = {}, commitArray = [], commentArray = [], currentChange = {100: 0, 500: 0, 1000: 0, 1001: 0}, previousChange = {100: 0, 500: 0, 1000: 0, 1001: 0}, activityData = Array(168).fill(0);
 
-  //функция сортирует передающиеся элементы и вызывает себя же при вложенности
+  //функция распределяет передающиеся элементы и вызывает себя же при вложенности
   function distributeData(item) {
     function checkObj(arr) {
       arr.forEach((value) => {
@@ -285,19 +276,8 @@ function prepareData(data, sprint) {
       }
     }
   });
-
   return resultArray;
 }
-
-//для локальной проверки
-// const jsonString = JSON.stringify(prepareData(dataInput, { sprintId: 977}));
-
-// fs.writeFile(outputdataJson, jsonString, (err , files) => {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-// });
 
 module.exports = {
   prepareData
