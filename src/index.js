@@ -290,9 +290,9 @@ function prepareData(data, sprint) {
 }
 
 //для локальной проверки
-// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 977}));
+// const jsonString = JSON.stringify(prepareData(dataInput, { sprintId: 977}));
 
-// fs.writeFile(outputdataJson, oleg, (err , files) => {
+// fs.writeFile(outputdataJson, jsonString, (err , files) => {
 //   if (err) {
 //     console.log(err);
 //     return;
