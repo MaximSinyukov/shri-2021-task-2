@@ -260,7 +260,7 @@ function prepareData(data, sprint) {
       title: 'Размер коммитов',
       subtitle: `${currentSprint.name}`,
       totalText: `${currentSprint.value} коммит${setEnding(currentSprint.value)}`,
-      differenceText: `${Number(currentSprint.value) > Number(previousSprint.value) ? '+' : ''}${currentSprint.value - previousSprint.value} c прошлого спринта`,
+      differenceText: `${currentSprint.value > previousSprint.value ? '+' : ''}${currentSprint.value - previousSprint.value} с прошлого спринта`,
       categories: [
         {title: '> 1001 строки', valueText: `${currentChange['1001']} коммит${setEnding(currentChange['1001'])}`, differenceText: `${currentChange['1001'] > previousChange['1001'] ? '+' : ''}${currentChange['1001'] - previousChange['1001']} коммит${setEnding(Math.abs(currentChange['1001'] - previousChange['1001']))}`},
         {title: '501 — 1000 строк', valueText: `${currentChange['1000']} коммит${setEnding(currentChange['1000'])}`, differenceText: `${currentChange['1000'] > previousChange['1000'] ? '+' : ''}${currentChange['1000'] - previousChange['1000']} коммит${setEnding(Math.abs(currentChange['1000'] - previousChange['1000']))}`},
@@ -292,7 +292,7 @@ function prepareData(data, sprint) {
 
 // необходимо для разработки
 
-// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 977}));
+// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 995}), null, 2);
 
 // fs.writeFile(outputdataJson, oleg, (err , files) => {
 //   if (err) {
