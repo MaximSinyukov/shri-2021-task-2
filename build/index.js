@@ -1,7 +1,8 @@
 // необходимо для разработки
 // const fs = require('fs');
 // const path = require('path');
-// const pathdataJson = path.join(__dirname, '../examples/input-vloj.json');
+// // const pathdataJson = path.join(__dirname, '../examples/input-vloj.json');
+// const pathdataJson = path.join(__dirname, '../examples/input.json');
 // const outputdataJson = path.join(__dirname, '../examples/example-output.json');
 // const dataJson = fs.readFileSync(pathdataJson);
 // const dataInput = JSON.parse(dataJson);
@@ -237,14 +238,14 @@ function prepareData(data, sprint) {
       values: sprintsList.map((item) => {
         if(sprint.sprintId === item.id) {
           return {
-            title: item.id,
+            title: String(item.id),
             hint: item.name,
             value: item.value,
             active: true
           }
         }
         return {
-          title: item.id,
+          title: String(item.id),
           hint: item.name,
           value: item.value,
         };
@@ -259,12 +260,12 @@ function prepareData(data, sprint) {
       title: 'Размер коммитов',
       subtitle: `${currentSprint.name}`,
       totalText: `${currentSprint.value} коммит${setEnding(currentSprint.value)}`,
-      differenceText: `${currentSprint.value - previousSprint.value} c прошлого спринта`,
+      differenceText: `${Number(currentSprint.value) > Number(previousSprint.value) ? '+' : ''}${currentSprint.value - previousSprint.value} c прошлого спринта`,
       categories: [
-        {title: '> 1001 строки', valueText: `${currentChange['1001']} коммит${setEnding(currentChange['1001'])}`, differenceText: `${currentChange['1001'] - previousChange['1001']} коммит${setEnding(Math.abs(currentChange['1001'] - previousChange['1001']))}`},
-        {title: '501 — 1000 строк', valueText: `${currentChange['1000']} коммит${setEnding(currentChange['1000'])}`, differenceText: `${currentChange['1000'] - previousChange['1000']} коммит${setEnding(Math.abs(currentChange['1000'] - previousChange['1000']))}`},
-        {title: '101 — 500 строк', valueText: `${currentChange['500']} коммит${setEnding(currentChange['500'])}`, differenceText: `${currentChange['500'] - previousChange['500']} коммит${setEnding(Math.abs(currentChange['500'] - previousChange['500']))}`},
-        {title: '1 — 100 строк', valueText: `${currentChange['100']} коммит${setEnding(currentChange['100'])}`, differenceText: `${currentChange['100'] - previousChange['100']} коммит${setEnding(Math.abs(currentChange['100'] - previousChange['100']))}`}
+        {title: '> 1001 строки', valueText: `${currentChange['1001']} коммит${setEnding(currentChange['1001'])}`, differenceText: `${currentChange['1001'] > previousChange['1001'] ? '+' : ''}${currentChange['1001'] - previousChange['1001']} коммит${setEnding(Math.abs(currentChange['1001'] - previousChange['1001']))}`},
+        {title: '501 — 1000 строк', valueText: `${currentChange['1000']} коммит${setEnding(currentChange['1000'])}`, differenceText: `${currentChange['1000'] > previousChange['1000'] ? '+' : ''}${currentChange['1000'] - previousChange['1000']} коммит${setEnding(Math.abs(currentChange['1000'] - previousChange['1000']))}`},
+        {title: '101 — 500 строк', valueText: `${currentChange['500']} коммит${setEnding(currentChange['500'])}`, differenceText: `${currentChange['500'] > previousChange['500'] ? '+' : ''}${currentChange['500'] - previousChange['500']} коммит${setEnding(Math.abs(currentChange['500'] - previousChange['500']))}`},
+        {title: '1 — 100 строк', valueText: `${currentChange['100']} коммит${setEnding(currentChange['100'])}`, differenceText: `${currentChange['100'] > previousChange['100'] ? '+' : ''}${currentChange['100'] - previousChange['100']} коммит${setEnding(Math.abs(currentChange['100'] - previousChange['100']))}`}
       ]
     }
   });
@@ -291,7 +292,7 @@ function prepareData(data, sprint) {
 
 // необходимо для разработки
 
-// const oleg = prepareData(dataInput, { sprintId: 977});
+// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 977}));
 
 // fs.writeFile(outputdataJson, oleg, (err , files) => {
 //   if (err) {
