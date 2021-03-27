@@ -199,98 +199,94 @@ function prepareData(data, sprint) {
     return b - a;
   });
 
-  resultArray.push({
-    alias: 'leaders',
-    data: {
-      title: 'Больше всего коммитов',
-      subtitle: `${currentSprint.name}`,
-      emoji: '👑',
-      users: usersCommit
-    }
-  });
-
-  resultArray.push({
-    alias: 'vote',
-    data: {
-      title: 'Самый 🔎 внимательный разработчик',
-      subtitle: `${currentSprint.name}`,
-      emoji: '🔎',
-      users: userList.map((user) => {
-        return {
-          id: user.id,
-          name: user.name,
-          avatar: user.avatar,
-          valueText: `${user.likes} голос${setEnding(user.likes)}`
-        };
-      })
-    }
-  });
-
-  resultArray.push({
-    alias: 'chart',
-    data: {
-      title: 'Коммиты',
-      subtitle: `${currentSprint.name}`,
-      values: sprintsList.map((item) => {
-        if(sprint.sprintId === item.id) {
+  return [
+    {
+      alias: 'leaders',
+      data: {
+        title: 'Больше всего коммитов',
+        subtitle: `${currentSprint.name}`,
+        emoji: '👑',
+        users: usersCommit
+      }
+    },
+    {
+      alias: 'vote',
+      data: {
+        title: 'Самый 🔎 внимательный разработчик',
+        subtitle: `${currentSprint.name}`,
+        emoji: '🔎',
+        users: userList.map((user) => {
+          return {
+            id: user.id,
+            name: user.name,
+            avatar: user.avatar,
+            valueText: `${user.likes} голос${setEnding(user.likes)}`
+          };
+        })
+      }
+    },
+    {
+      alias: 'chart',
+      data: {
+        title: 'Коммиты',
+        subtitle: `${currentSprint.name}`,
+        values: sprintsList.map((item) => {
+          if(sprint.sprintId === item.id) {
+            return {
+              title: String(item.id),
+              hint: item.name,
+              value: item.value,
+              active: true
+            }
+          }
           return {
             title: String(item.id),
             hint: item.name,
             value: item.value,
-            active: true
-          }
-        }
-        return {
-          title: String(item.id),
-          hint: item.name,
-          value: item.value,
-        };
-      }),
-      users: usersCommit
-    }
-  });
-
-  resultArray.push({
-    alias: 'diagram',
-    data: {
-      title: 'Размер коммитов',
-      subtitle: `${currentSprint.name}`,
-      totalText: `${currentSprint.value} коммит${setEnding(currentSprint.value)}`,
-      differenceText: `${currentSprint.value > previousSprint.value ? '+' : ''}${currentSprint.value - previousSprint.value} с прошлого спринта`,
-      categories: [
-        {title: '> 1001 строки', valueText: `${currentChange['1001']} коммит${setEnding(currentChange['1001'])}`, differenceText: `${currentChange['1001'] > previousChange['1001'] ? '+' : ''}${currentChange['1001'] - previousChange['1001']} коммит${setEnding(Math.abs(currentChange['1001'] - previousChange['1001']))}`},
-        {title: '501 — 1000 строк', valueText: `${currentChange['1000']} коммит${setEnding(currentChange['1000'])}`, differenceText: `${currentChange['1000'] > previousChange['1000'] ? '+' : ''}${currentChange['1000'] - previousChange['1000']} коммит${setEnding(Math.abs(currentChange['1000'] - previousChange['1000']))}`},
-        {title: '101 — 500 строк', valueText: `${currentChange['500']} коммит${setEnding(currentChange['500'])}`, differenceText: `${currentChange['500'] > previousChange['500'] ? '+' : ''}${currentChange['500'] - previousChange['500']} коммит${setEnding(Math.abs(currentChange['500'] - previousChange['500']))}`},
-        {title: '1 — 100 строк', valueText: `${currentChange['100']} коммит${setEnding(currentChange['100'])}`, differenceText: `${currentChange['100'] > previousChange['100'] ? '+' : ''}${currentChange['100'] - previousChange['100']} коммит${setEnding(Math.abs(currentChange['100'] - previousChange['100']))}`}
-      ]
-    }
-  });
-
-  resultArray.push({
-    alias: 'activity',
-    data: {
-      title: 'Коммиты',
-      subtitle: `${currentSprint.name}`,
+          };
+        }),
+        users: usersCommit
+      }
+    },
+    {
+      alias: 'diagram',
       data: {
-        sun: activityData.slice(0, 24),
-        mon: activityData.slice(24, 48),
-        tue: activityData.slice(48, 72),
-        wed: activityData.slice(72, 96),
-        thu: activityData.slice(96, 120),
-        fri: activityData.slice(120, 144),
-        sat: activityData.slice(144, 168)
+        title: 'Размер коммитов',
+        subtitle: `${currentSprint.name}`,
+        totalText: `${currentSprint.value} коммит${setEnding(currentSprint.value)}`,
+        differenceText: `${currentSprint.value > previousSprint.value ? '+' : ''}${currentSprint.value - previousSprint.value} с прошлого спринта`,
+        categories: [
+          {title: '> 1001 строки', valueText: `${currentChange['1001']} коммит${setEnding(currentChange['1001'])}`, differenceText: `${currentChange['1001'] > previousChange['1001'] ? '+' : ''}${currentChange['1001'] - previousChange['1001']} коммит${setEnding(Math.abs(currentChange['1001'] - previousChange['1001']))}`},
+          {title: '501 — 1000 строк', valueText: `${currentChange['1000']} коммит${setEnding(currentChange['1000'])}`, differenceText: `${currentChange['1000'] > previousChange['1000'] ? '+' : ''}${currentChange['1000'] - previousChange['1000']} коммит${setEnding(Math.abs(currentChange['1000'] - previousChange['1000']))}`},
+          {title: '101 — 500 строк', valueText: `${currentChange['500']} коммит${setEnding(currentChange['500'])}`, differenceText: `${currentChange['500'] > previousChange['500'] ? '+' : ''}${currentChange['500'] - previousChange['500']} коммит${setEnding(Math.abs(currentChange['500'] - previousChange['500']))}`},
+          {title: '1 — 100 строк', valueText: `${currentChange['100']} коммит${setEnding(currentChange['100'])}`, differenceText: `${currentChange['100'] > previousChange['100'] ? '+' : ''}${currentChange['100'] - previousChange['100']} коммит${setEnding(Math.abs(currentChange['100'] - previousChange['100']))}`}
+        ]
+      }
+    },
+    {
+      alias: 'activity',
+      data: {
+        title: 'Коммиты',
+        subtitle: `${currentSprint.name}`,
+        data: {
+          sun: activityData.slice(0, 24),
+          mon: activityData.slice(24, 48),
+          tue: activityData.slice(48, 72),
+          wed: activityData.slice(72, 96),
+          thu: activityData.slice(96, 120),
+          fri: activityData.slice(120, 144),
+          sat: activityData.slice(144, 168)
+        }
       }
     }
-  });
-
-  return resultArray;
+  ];
 }
 
 // необходимо для разработки
 
-// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 991}), null, 2);
+// const newData = JSON.stringify(prepareData(dataInput, { sprintId: 977}), null, 2);
 
-// fs.writeFile(outputdataJson, oleg, (err , files) => {
+// fs.writeFile(outputdataJson, newData, (err , files) => {
 //   if (err) {
 //     console.log(err);
 //     return;
