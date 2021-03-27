@@ -1,7 +1,6 @@
 // необходимо для разработки
 // const fs = require('fs');
 // const path = require('path');
-// // const pathdataJson = path.join(__dirname, '../examples/input-vloj.json');
 // const pathdataJson = path.join(__dirname, '../examples/input.json');
 // const outputdataJson = path.join(__dirname, '../examples/example-output.json');
 // const dataJson = fs.readFileSync(pathdataJson);
@@ -182,13 +181,16 @@ function prepareData(data, sprint) {
   });
 
   //повтор информации в шаблонах leaders и chart, плюс дальше у нас еще одна сортировка по лайкам
-  const usersCommit = userList.map((user) => {
-    return {
-      id: user.id,
-      name: user.name,
-      avatar: user.avatar,
-      valueText: String(user.valueText)
-    };
+  const usersCommit = []
+  userList.forEach((user) => {
+    if (user.valueText > 0) {
+      usersCommit.push({
+        id: user.id,
+        name: user.name,
+        avatar: user.avatar,
+        valueText: String(user.valueText)
+      });
+    }
   });
 
   userList.sort((a, b) => {
@@ -286,7 +288,7 @@ function prepareData(data, sprint) {
 
 // необходимо для разработки
 
-// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 977}), null, 2);
+// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 991}), null, 2);
 
 // fs.writeFile(outputdataJson, oleg, (err , files) => {
 //   if (err) {
