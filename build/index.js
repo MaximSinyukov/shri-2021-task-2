@@ -90,12 +90,6 @@ function prepareData(data, sprint) {
   const currentSprint = sprintsList[sprint.sprintId];
   sprintsList = Object.values(sprintsList);
 
-  sprintsList.sort((a, b) => {
-    b = b.id;
-    a = a.id;
-    return a - b;
-  });
-
   //будем использовать бинарный поиск для уменьшения итераций в переборе спринтов, т.к. они уже отсортированы по времени
   function binarySearch(sortedNumbers, n) {
   let start = 0;
@@ -128,7 +122,7 @@ function prepareData(data, sprint) {
     if (sprintItem.id === sprint.sprintId - 1) {
       //находим размер коммита в строках и записываем значение в свойства объекта для подсчета разницы последних спринтов
       const sumString = item.summaries.reduce((prev, summary) => {
-        return prev += summaryList[(typeof summary) === 'object' ? summary.id : summary].change;
+        return prev += summaryList[typeof summary === 'object' ? summary.id : summary].change;
       }, 0);
       if(sumString <= 100) {
         previousChange['100']++;
@@ -143,9 +137,9 @@ function prepareData(data, sprint) {
 
     //собираем информацию по текущему спринту
     if(sprintItem.id === sprint.sprintId) {
-      userList[(typeof item.author) === 'object' ? item.author.id : item.author].valueText++;
+      userList[typeof item.author === 'object' ? item.author.id : item.author].valueText++;
       const sumString = item.summaries.reduce((prev, summary) => {
-        return prev += summaryList[(typeof summary) === 'object' ? summary.id : summary].change;
+        return prev += summaryList[typeof summary === 'object' ? summary.id : summary].change;
       }, 0);
       if(sumString <= 100) {
         currentChange['100']++;
@@ -292,7 +286,7 @@ function prepareData(data, sprint) {
 
 // необходимо для разработки
 
-// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 995}), null, 2);
+// const oleg = JSON.stringify(prepareData(dataInput, { sprintId: 977}), null, 2);
 
 // fs.writeFile(outputdataJson, oleg, (err , files) => {
 //   if (err) {
