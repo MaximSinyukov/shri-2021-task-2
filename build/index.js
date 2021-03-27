@@ -8,8 +8,11 @@
 
 
 function prepareData(data, sprint) {
+  if ((!Array.isArray(data)) || (sprint.sprintId < 958) || (sprint.sprintId > 996)) {
+    return [];
+  }
   let  userList = {}, sprintsList = {};
-  const resultArray = [], summaryList = {}, commitArray = [], commentArray = [], currentChange = {100: 0, 500: 0, 1000: 0, 1001: 0}, previousChange = {100: 0, 500: 0, 1000: 0, 1001: 0}, activityData = Array(168).fill(0);
+  const summaryList = {}, commitArray = [], commentArray = [], currentChange = {100: 0, 500: 0, 1000: 0, 1001: 0}, previousChange = {100: 0, 500: 0, 1000: 0, 1001: 0}, activityData = Array(168).fill(0);
 
   //функция распределяет передающиеся элементы и вызывает себя же при вложенности
   function distributeData(item) {
